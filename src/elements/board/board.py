@@ -2,10 +2,13 @@ from ..pieces.piece import Piece
 
 class Board:
 
-    def __init__(self, rows, columns):
+    def __init__(self, rows, columns, board = None):
         self.rows = rows
         self.columns = columns
-        self.board = [[0 for i in range(columns)] for j in range(rows)]
+        if board:
+            self.board = board
+        else:
+            self.board = [[0 for i in range(columns)] for j in range(rows)]
     
     def get_board(self):
         return self.board
