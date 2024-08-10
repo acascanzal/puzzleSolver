@@ -25,41 +25,29 @@ class Board:
     
     def copy_piece_in_board(self, board_position, piece: Piece, piece_position):
         rows, cols = len(piece.get_form()), len(piece.get_form()[0])
-        affected_positions = []  # Guardamos las posiciones afectadas en el tablero
+        affected_positions = []
 
-        # Intentamos colocar toda la pieza en el tablero
         for i in range(rows):
             for j in range(cols):
-                # Calculamos la posición en el tablero para la pieza
                 board_i = board_position[0] + i - piece_position[0]
                 board_j = board_position[1] + j - piece_position[1]
 
-                # Verificamos que la posición sea válida y que la posición en el tablero esté vacía
                 if piece.valid_index(i, j) and self.valid_index(board_i, board_j):
                     if self.board[board_i][board_j] != 0 and piece.piece_get_element(i, j) != 0:
                         return False
                 elif piece.piece_get_element(i, j) != 0:
                     return False
         
-        # Si todas las posiciones son válidas, colocamos la pieza
         for i in range(rows):
             for j in range(cols):
                 board_i = board_position[0] + i - piece_position[0]
                 board_j = board_position[1] + j - piece_position[1]
                 if piece.piece_get_element(i, j) != 0:
                     self.board[board_i][board_j] = piece.piece_get_element(i, j)
-                    affected_positions.append((board_i, board_j))  # Guardamos la posición afectada
+                    affected_positions.append((board_i, board_j))
                     piece.subtract_item()
 
-        # Si la pieza fue colocada exitosamente
         return True
-
-    def revert_piece_in_board(self, affected_positions, piece: Piece):
-        # Revertimos la colocación de la pieza en las posiciones afectadas
-        for pos in affected_positions:
-            self.board[pos[0]][pos[1]] = 0
-            piece.add_item()
-
         
             
     
